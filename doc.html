@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: skyblue;"></html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>DAA Assignment 2 Report</title>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
+			integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq"
+			crossorigin="anonymous"
+		/>
+		<link rel="stylesheet" href="report.css" />
+		<script
+			defer
+			src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"
+			integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz"
+			crossorigin="anonymous"
+		></script>
+		<script
+			defer
+			src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"
+			integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI"
+			crossorigin="anonymous"
+			onload="renderMathInElement(document.body);"
+		></script>
+	</head>
+
+	<body>
+        <h2>Problem Statement</h2>
+        <hr />
+        <p>
+            By using Dynamic Programming Algorithm implement an algorithm to predict the secondary structure of a RNA and return all the base-pairs.
+        </p>
+		<h2 id="dynamic-programming-solution">Dynamic Programming solution</h2>
+		<hr />
+		<p>
+			Let \(dp_{l, r }\) denote the cardinality of the maximum matching in \(s_l s_{l+1}
+			\ldots s_r\) of the sequence \(S\). Then it is easy to notice the following recurrence.
+		</p>
+		<p class="recurrence">
+			\[ dp_{ l, r } = \max \begin{cases} \text{ } \text{ } \text{ } \text{ } \text{ } \text{
+			} \text{ } \text{ } \text{ } \text{ } \text{ } \text{ } \text{ } \text{ } \text{ }
+			\text{ } \text{ } \text{ } \text{ } \text{ } \text{ } \text{ } 0 & r - l \le
+			\texttt{4} \\ \text{ } \text{ } \text{ } \text{ } \text{ } \text{ } \text{ }
+			\text{ } \text{ } \text{ } \text{ } \text{ } \text{ } \text{ } \text{ } \text{ } \text{
+			} \text{ } dp_{ l, r-1 } & r - l \gt \texttt{4} \\ \underset{l \le m \le r}{\max}
+			\text{ } \text{ } dp_{ l, m-1 } + 1 + dp_{ m+1, r-1} & b_m \text{ and } b_r \text{ are
+			complementary bases} \end{cases} \]
+		</p>
+		<p>The required value is \(dp_{ 1, n }\) — the maximum matching in the sequence \(S\).</p>
+		<h2 id="timing-analysis">Timing Analysis</h2>
+		<hr />
+		<div class="container">
+			<center><img src="1.png" class="plot" alt="Plot of CPU Time vs n" height="500" width="700"/></center>
+			<center><img src="2.png" class="plot" alt="Plot of CPU Time vs n3" height="500" width="700"/></center>
+		</div>
+		<p>
+			The window size takes \(\mathcal{O}(n)\) time to compute since we increase the value of k from 5 to n as the outer loop and there are \(\mathcal{O}(n^2)\)
+			states. Hence the <em>time complexity</em> of computing all the dp which is our opt[][] states is
+			\(\mathcal{O}(n^3)\).
+		</p>
+		<p>
+			Also, since there are \(\mathcal{O}(n^2)\) dp states which must be stored in memory, the
+			<em>space complexity</em> is \(\mathcal{O}(n^2)\).
+		</p>
+        <h2 id="design-problem">Design Problem</h2>
+        <hr />
+        <p>
+            The design problem in this algorithm is that the time complexity is high. The algorithm has a time complexity of \(\mathcal{O}(n^3)\), where \(n\) is the length of the RNA sequence.
+            This means that as the length of the sequence increases, the time taken to compute the maximum matching also increases significantly. 
+            This can be a performance bottleneck, especially for large RNA sequences. It also restricts the length of the RNA sequence that can be processed efficiently.
+        </p>
+		<h2 id="visualization">Visualization</h2>
+		<hr />
+        <p>
+            We can visualize the RNA sequence and the base pairs by using the following images.
+        </p>
+        <p>
+            <h3>sequence 1 - AAUCCCCCGUGCCCAUAGCGGCGUGGAACCACCCGUUCCCAUUCCGAACACGGAAGUGAAACGCGCCAGCGCCGAUGGUACUGGGCGGGCGACCGCCUGGGAGAGUAGGUCGGUGCGGGGGA</h3>
+            <p>Total number of base pairs = 44</p>
+            Pairs - 
+            (3, 122) 
+            U--A 
+            (4, 121) 
+            C--G 
+            (5, 120) 
+            C--G 
+            (6, 119) 
+            C--G 
+            (7, 118) 
+            C--G
+            (8, 117) 
+            C--G
+            (9, 116) 
+            G--C
+            (12, 115)  
+            C--G
+            (13, 113) 
+            C--G
+            (14, 112)
+            C--G
+            (15, 110)
+            A--U
+            (16, 107)
+            U--A
+            (17, 106)
+            A--U
+            (97, 105)
+            C--G
+            (18, 96)
+            G--C
+            (98, 104)
+            U--A
+            (19, 95)
+            C--G
+            (20, 94)
+            G--C
+            (21, 93)
+            G--C
+            (22, 91)
+            C--G
+            (23, 90)
+            G--C
+            (32, 89)
+            C--G
+            (24, 31)
+            U--A
+            (33, 88)
+            C--G
+            (25, 30)
+            G--C
+            (34, 87)
+            C--G
+            (35, 86)
+            G--C
+            (38, 85)
+            C--G
+            (39, 84)
+            C--G
+            (40, 83)
+            C--G
+            (41, 82)
+            A--U
+            (56, 81)
+            G--C
+            (42, 55)
+            U--A
+            (57, 80)
+            U--A
+            (43, 54)
+            U--A
+            (59, 79)
+            A--U
+            (44, 53)
+            C--G
+            (45, 52)
+            C--G
+            (46, 51)
+            G--C
+            (60, 76)
+            A--U
+            (62, 74)
+            C--G
+            (63, 72)
+            G--C
+            (64, 71)
+            C--G
+            (65, 70)
+            G--C
+        </p>
+        <img src="C:\Users\ADMIN\Downloads\daa_assign\daa_assign\rna_structure_1.png" alt="Image Description" height="900" width="300" align="center" title="generated image">
+        <img src="rna1.jpg" height="900" width="700" title="structured rna">
+        <p>Image1 - Generated by algorithm - 44 pairs</p>
+        <p>Image2 - 2D structure URL - 37 pairs</p>
+        <p>
+                <h3>sequence 2 - GUUCCUGCUGAACUGAGCCAGU</h3>
+                <p>Total number of base pairs = 5</p>
+                Pairs - 
+                (14, 20) U--A
+                (1, 13) G--C
+                (2, 12) U--A
+                (3, 11) U--A
+                (4, 10) C--G
+            </p>
+            <img src="C:\Users\ADMIN\Downloads\daa_assign\daa_assign\rna_structure_2.png" alt="Image Description" height="500" width="700"/>
+            <img src="rna2.jpg" height="500" width="700">
+            <p>Image1 - Generated by algorithm - 5 pairs</p>
+            <p>Image2 - 2D structure URL - 4 pairs</p>
+            <p>
+            <h3>sequence 3 - AGAUCUGAGCCUGGGAGCUCUCU</h3>
+            <p>Total number of base pairs = 7</p>
+            Pairs - 
+            (1, 23) A--U
+            (2, 22) G--C
+            (3, 21) A--U
+            (7, 20) G--C
+            (8, 19) A--U
+            (9, 18) G--C
+            (10, 15) C--G
+        </p>
+        <img src="C:\Users\ADMIN\Downloads\daa_assign\daa_assign\rna_structure_3.png" alt="Image Description" height="500" width="700"/>
+        <img src="rna3.jpg" height="500" width="700">
+        <p>Image1 - Generated by algorithm - 7 pairs</p>
+        <p>Image2 - 2D structure URL - 7 pairs</p>
+        <p>
+            <h3>sequence 4 - CUUUCAAUCCUCUUCUUGAGAUUC</h3>
+            <p>Total number of base pairs = 6</p>
+            Pairs - 
+            (6, 23) A--U
+            (7, 22) A--U
+            (8, 21) U--A
+            (9, 20) C--G
+            (11, 19) U--A
+            (12, 18) C--G
+        </p>
+        <img src="C:\Users\ADMIN\Downloads\daa_assign\daa_assign\rna_structure_4.png" alt="Image Description" height="500" width="700" />
+        <img src="rna4.jpg" height="500" width="700">
+        <p>Image1 - Generated by algorithm - 6 pairs</p>
+        <p>Image2 - 2D structure URL - 6 pairs</p>
+        <p>
+            <h3>sequence 5 - GUCUACGGCCAUACCACCCUGAACGCGCCCGAUCUCGUCUGAUCUCGGAAGCUAAGCAGGGUCGGGCCUGGUUAGUACUUGGAUGGGAGACCGCCUGGGAAUACCGGGUGCUGUAGGCUUU</h3>
+            <p>Total number of base pairs = 40</p>
+            <p>
+                Pairs -
+                (1, 118) G--C
+                (3, 116) C--G
+                (4, 115) U--A
+                (5, 114) A--U
+                (88, 112) A--U
+                (6, 87) C--G
+                (89, 111) G--C
+                (9, 86) C--G
+                (10, 85) C--G
+                (90, 109) A--U
+                (11, 84) A--U
+                (91, 108) C--G
+                (12, 83) U--A
+                (92, 107) C--G
+                (14, 82) C--G
+                (94, 106) C--G
+                (15, 81) C--G
+                (97, 105) G--C
+                (98, 104) G--C
+                (16, 76) A--U
+                (17, 75) C--G
+                (20, 74) U--A
+                (22, 73) A--U
+                (23, 72) A--U
+                (24, 70) C--G
+                (25, 68) G--C
+                (27, 67) G--C
+                (28, 66) C--G
+                (29, 65) C--G
+                (30, 64) C--G
+                (31, 63) G--C
+                (32, 62) A--U
+                (34, 59) C--G
+                (35, 58) U--A
+                (36, 56) C--G
+                (38, 55) U--A
+                (40, 54) U--A
+                (41, 52) G--C
+                (44, 51) C--G
+                (45, 50) U--A
+            </p>
+        </p>
+        <img src="C:\Users\ADMIN\Downloads\daa_assign\daa_assign\rna_structure_5.png" alt="Image Description" align="left" height="500" width="700"/>
+        <img src="rna5.jpg" height="500" width="700">
+        <p>Image1 - Generated by algorithm - 40</p>
+        <p>Image2 - 2D structure URL - 35</p>
+	</body>
+</html>
