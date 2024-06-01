@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<h1>Design and Analysis of Advanced Algorithms</h1>
+<h1>Design and Analysis of Algorithms</h1>
 
 <h2>Task Description</h2>
 <p>The goal is to implement a dynamic programming solution to predict the secondary structure of an RNA molecule, maximizing the number of base pairs, given a nucleotide sequence, and visualize the structure.</p>
